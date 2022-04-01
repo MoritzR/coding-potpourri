@@ -37,6 +37,11 @@ aPlusBTimesC' a b c = aPlusB + c
   where
     aPlusB = a + b
 
+-- infix notation
+plus = add
+
+onePlusTwo = 1 `plus` 2
+
 -- pattern matching
 fib 0 = 0
 fib 1 = 1
@@ -71,8 +76,3 @@ sumEvens numbers =
 --     numbers
 --         & filter even
 --         & foldr _ 0
-
--- infix notation
-plus = add
-
-onePlusTwo = 1 `plus` 2
