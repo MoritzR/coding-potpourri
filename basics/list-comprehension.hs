@@ -1,3 +1,5 @@
+import Control.Monad (guard)
+
 -- a function posing as an expensive computation
 expensive :: Int -> Int
 expensive = (* 10)
@@ -14,3 +16,11 @@ b = [1, 2, 3] >>= (\e -> let e' = expensive e in [e' + 1 | even e'])
 -- replace (>>=)
 c :: [Int]
 c = [e' + 1 | e <- [1, 2, 3], let e' = expensive e, even e']
+
+-- do-notation instead of list comprehension
+d :: [Int]
+d = do
+  e <- [1, 2, 3]
+  let e' = expensive e
+  guard (even e')
+  return (e + 1)
