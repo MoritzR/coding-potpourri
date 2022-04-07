@@ -4,7 +4,9 @@ module Lib
 where
 
 import Data.Function ((&))
+import Data.Maybe (fromMaybe)
 import System.Random (randomRIO)
+import Text.Read (readMaybe)
 
 main :: IO ()
 main = do
@@ -14,13 +16,15 @@ main = do
 
 tryToGuess :: Int -> IO ()
 tryToGuess randomNumber = do
-  guessedNumber <- readLn
-  case compare guessedNumber randomNumber of
-    LT -> do
-      print "Your namer is too low."
-      tryToGuess randomNumber
-    GT -> do
-      print "Your number is too high."
-      tryToGuess randomNumber
-    EQ -> print ("Great you guessed correctly, it was '" ++ show randomNumber ++ "'!")
-
+  guessedNumber <- readMaybe <$> getLine
+  maybe showInputIsNotNumber showGuessResult guessedNumber
+  where
+    showInputIsNotNumber = print "That was not a number, try again." >> tryToGuess randomNumber
+    showGuessResult number = case compare number randomNumber of
+      LT -> do
+        print "Your namer is too low."
+        tryToGuess randomNumber
+      GT -> do
+        print "Your number is too high."
+        tryToGuess randomNumber
+      EQ -> print ("Great you guessed correctly, it was '" ++ show randomNumber ++ "'!")
