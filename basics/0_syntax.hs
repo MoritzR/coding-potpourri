@@ -54,6 +54,9 @@ orElse Nothing a = a
 -- list comprehensions
 oneToTen = [1 .. 10]
 
+-- equal to pythons itertools.count(1) which generated an infinite lazy generator
+oneToInfinity = [1..]
+
 evensFromOneToTen = [2, 4 .. 10]
 
 oneToFive = [i | i <- [1 .. 10], i <= 5]
