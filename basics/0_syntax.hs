@@ -58,6 +58,7 @@ evensFromOneToTen = [2, 4 .. 10]
 
 oneToFive = [i | i <- [1 .. 10], i <= 5]
 
+-- In math this would look like: { i + 1 | i ∈ {1, 2, ..., 10}, i ≤ 5 } 
 twoToSix = [i + 1 | i <- [1 .. 10], i <= 5]
 
 -- function composition
