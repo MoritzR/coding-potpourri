@@ -7,9 +7,22 @@ significant properties of Haskell:
 - lazy
 -}
 
--- get the type of a function
--- Prelude> :t map
--- map :: (a -> b) -> [a] -> [b]
+{-
+get the type of a function
+Prelude> :t map
+map :: (a -> b) -> [a] -> [b]
+
+get documentation on a function
+Prelude> :doc print
+The 'print' function outputs a value of any printable type ...
+
+get more information on a data type
+Prelude> :info Maybe
+type Maybe :: * -> *
+data Maybe a = Nothing | Just a
+        -- Defined in ‘GHC.Maybe’
+...
+-}
 
 -- define a function
 add a b = a + b
