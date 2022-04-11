@@ -1,5 +1,12 @@
 import Data.Function ((&))
 
+{-
+significant properties of Haskell:
+- pure* (means no statements, for example `something :: a -> ()` is useless)
+- strongly typed
+- lazy
+-}
+
 -- get the type of a function
 -- Prelude> :t map
 -- map :: (a -> b) -> [a] -> [b]
@@ -55,13 +62,13 @@ orElse Nothing a = a
 oneToTen = [1 .. 10]
 
 -- equal to pythons itertools.count(1) which generated an infinite lazy generator
-oneToInfinity = [1..]
+oneToInfinity = [1 ..]
 
 evensFromOneToTen = [2, 4 .. 10]
 
 oneToFive = [i | i <- [1 .. 10], i <= 5]
 
--- In math this would look like: { i + 1 | i ∈ {1, 2, ..., 10}, i ≤ 5 } 
+-- In math this would look like: { i + 1 | i ∈ {1, 2, ..., 10}, i ≤ 5 }
 twoToSix = [i + 1 | i <- [1 .. 10], i <= 5]
 
 -- function composition
