@@ -10,8 +10,10 @@ a :: [Int]
 a = [1, 2, 3] >>= (\e -> let e' = expensive e in if even e' then [e' + 1] else [])
 
 -- apply suggested transformation to list comprehension
-b :: [Int]
+b, b' :: [Int]
 b = [1, 2, 3] >>= (\e -> let e' = expensive e in [e' + 1 | even e'])
+-- move let inside the list comprehension
+b' = [1, 2, 3] >>= (\e -> [e' + 1 | let e' = expensive e, even e'])
 
 -- replace (>>=)
 c :: [Int]
