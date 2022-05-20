@@ -37,9 +37,11 @@ var childToString: ToStringer<Child> = child => `Bar ${child.bar}, Foo ${child.f
 
 // covariant, when a Child is-a Parent, then a Builder<Child> is-a Builder<Parent>, but not the other way around
 buildParent = buildChild
+// @ts-expect-error
 buildChild = buildParent
 
 // contravariant, when a Child is-a Parent, then a ToStringer<Parent> is-a ToStringer<Child>, but not the other way around
+// @ts-expect-error
 parentToString = childToString
 childToString = parentToString
 
@@ -50,5 +52,7 @@ var transformParent: Transform<Parent> = parent => ({ foo: parent.foo * 2 })
 var transformChild: Transform<Child> = child => ({ foo: child.foo + 1, bar: child.bar - 1 })
 
 // Transform<T> is invariant in T, so no two Transforms can be assigned to each other, unless T is the same type
+// @ts-expect-error
 transformParent = transformChild
+// @ts-expect-error
 transformChild = transformParent
