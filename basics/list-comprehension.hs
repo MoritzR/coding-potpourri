@@ -25,4 +25,4 @@ d = do
   e <- [1, 2, 3]
   let e' = expensive e
   guard (even e')
-  return (e + 1)
+  return (e' + 1)
