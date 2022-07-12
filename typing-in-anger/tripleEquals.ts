@@ -66,7 +66,7 @@ two = one
 // why is that? Because `myEquals(1 as 1, 2 as 2)`
 // widens to the type `myEquals<1 | 2>(a: 1 | 2, b: 1 | 2): boolean`
 
-// We now provide type annotation to make our previous example compile
+// We now provide type annotations to make our previous example compile
 myEquals<number | string>(1, "hello")
 myEquals<1 | "hello">(1, "hello")
 

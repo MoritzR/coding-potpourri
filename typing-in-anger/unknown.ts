@@ -31,6 +31,6 @@ interface InvariantPayload<in out T> { payload: T }
 const invariantIntPayload: InvariantPayload<number> = { payload: 1 };
 // type error: `Type 'unknown' is not assignable to type 'number'`, nice!
 const invariantUnknownPayload: InvariantPayload<unknown> = invariantIntPayload;
-// but we can still assing `intPayload` to it!F
+// but we can still assing `intPayload` to it!
 const invariantUnknownPayload2: InvariantPayload<unknown> = intPayload;
 unknownPayload.payload = "hello world"
