@@ -30,7 +30,7 @@ look = do
 go :: ReadP Command
 go = do
   string "go "
-  optional toThe
+  toThe
   directionToGo <- direction
   return (Go directionToGo)
 
