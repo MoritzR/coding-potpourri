@@ -23,6 +23,7 @@ interface Payload<T> { payload: T }
 const intPayload: Payload<number> = { payload: 1 };
 const unknownPayload: Payload<unknown> = intPayload;
 unknownPayload.payload = "hello world"
+// runtime error: `int.toPrecision is not a function`
 const printIntPayload = (intPayload: Payload<number>) => { console.log(intPayload.payload.toPrecision(1)) }
 
 
