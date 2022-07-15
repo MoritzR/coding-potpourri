@@ -29,7 +29,7 @@ const callOverload2 = call(overload, "PARAM2")
 /**
  * The above program should compile, but does not.
  * It also works the other way around, the following program
- * should not compile, but it does an throws a runtime error
+ * should not compile, but it does and throws a runtime error
  */
 
  function overloadWithOneOrTwoParameters(number1: number, number2: number): number
