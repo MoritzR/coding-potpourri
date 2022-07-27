@@ -6,13 +6,22 @@ module Lib
   )
 where
 
-import Control.Lens (Field1 (_1), Field2 (_2), Getting, Ixed (ix), Lens', Prism', Traversal', ignored, index, over, toListOf, traversed, (^.))
+import Control.Lens (Field1 (_1), Field2 (_2), Getting, Ixed (ix), Lens', Prism', Traversal', ignored, index, over, toListOf, traversed, (^.), (^..))
 import Control.Lens.Unsound (adjoin)
 import Data.Foldable (Foldable (toList))
 import Types
 
 someFunc :: IO ()
 someFunc = putStrLn "someFunc"
+
+allWindowsInProject :: [Window]
+allWindowsInProject = project ^. allWindows
+
+allGlazingsInProject :: [Glazing]
+allGlazingsInProject = allWindowsInProject ^. traverse . windowToGlazing 0
+
+allWindows :: Traversal' Project [Window]
+allWindows = listWindow `adjoin` listWindowOptional
 
 glassFilling :: Filling
 glassFilling =
@@ -41,20 +50,14 @@ project =
       _listWindowOptional = [window1]
     }
 
-glazings :: Int -> Traversal' Window Field
-glazings indexFrame = listField . traversed . index indexFrame
+windowToGlazing :: Int -> Traversal' Window [Glazing]
+windowToGlazing indexFrame = listField . traversed . index indexFrame . fieldToFilling . _Glass
 
-slotsToFillings :: Traversal' [Slot] Filling
-slotsToFillings = traverse . listFilling . traverse
-
-fieldToFillings :: Traversal' Field Filling
-fieldToFillings f = \case
+fieldToFilling :: Traversal' Field Filling
+fieldToFilling f = \case
   Standard slots -> Standard <$> slotsToFillings f slots
   HST filling -> HST <$> f filling
   field -> pure field
 
-allWindows :: Traversal' Project [Window]
-allWindows = listWindow `adjoin` listWindowOptional
-
-allWindowsInProject :: [Window]
-allWindowsInProject = project ^. allWindows
+slotsToFillings :: Traversal' [Slot] Filling
+slotsToFillings = traverse . listFilling . traverse

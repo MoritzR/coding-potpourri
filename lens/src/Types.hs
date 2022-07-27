@@ -2,7 +2,7 @@
 
 module Types where
 
-import Control.Lens (makeLenses)
+import Control.Lens (makeLenses, makePrisms)
 
 data Project = Project
   { _listWindow :: [Window],
@@ -43,3 +43,5 @@ makeLenses ''Field
 makeLenses ''Slot
 makeLenses ''Filling
 makeLenses ''Glazing
+
+makePrisms ''Filling
