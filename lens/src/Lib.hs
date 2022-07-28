@@ -51,7 +51,12 @@ project =
     }
 
 windowToGlazing :: Int -> Traversal' Window [Glazing]
-windowToGlazing indexFrame = listField . traversed . index indexFrame . fieldToFilling . _Glass
+windowToGlazing indexFrame =
+  listField
+    . traversed
+    . index indexFrame
+    . fieldToFilling
+    . _Glass
 
 fieldToFilling :: Traversal' Field Filling
 fieldToFilling f = \case
