@@ -1,7 +1,8 @@
 {-# LANGUAGE ExistentialQuantification #-}
 
 import Data.Function ((&))
-import Data.Maybe (listToMaybe)
+import Data.List (intercalate)
+import Data.Maybe (catMaybes, listToMaybe)
 
 data ErrorMesssage = Error String | AllFine deriving (Show)
 
@@ -31,13 +32,28 @@ testFirstCharacter =
 --   -- Probable fix: use pattern-matching syntax instead
 --   maybe AllFine getError validation $ preprocess validation toValidate
 
-runValidation :: a -> Validation a -> ErrorMesssage
+runValidation :: a -> Validation a -> Maybe ErrorMesssage
 runValidation toValidate (Validation preprocess getError) =
-  maybe AllFine getError $ preprocess toValidate
+  getError <$> preprocess toValidate
 
-runValidations :: a -> [Validation a] -> [ErrorMesssage]
+runValidations :: a -> [Validation a] -> [Maybe ErrorMesssage]
 runValidations = map . runValidation
+
+asText :: [Maybe ErrorMesssage] -> String
+asText validationResults =
+  let validationsThatRan = catMaybes validationResults
+      errors = [message | (Error message) <- validationsThatRan]
+   in concat
+        [ "I had ",
+          show $ length validationResults,
+          " validations and ran ",
+          show $ length validationsThatRan,
+          " of them. ",
+          show $ length errors,
+          " returned errors. Here are all errors: ",
+          intercalate ", " errors
+        ]
 
 main :: IO ()
 main = do
-  print $ runValidations "A string to test" [testLength, testFirstCharacter]
+  print $ asText $ runValidations "A string to test" [testLength, testFirstCharacter]
