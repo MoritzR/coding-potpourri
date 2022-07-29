@@ -10,4 +10,4 @@ async function program() {
 
 program()
 
-// 'node race.js' finished after how many seconds?
+// 'node race.js' finishes after how many seconds?
