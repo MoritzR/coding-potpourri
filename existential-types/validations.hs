@@ -3,7 +3,7 @@
 import Data.Function ((&))
 import Data.Maybe (listToMaybe)
 
-data ErrorMesssage = Error String | AllFine
+data ErrorMesssage = Error String | AllFine deriving (Show)
 
 data Validation a = forall b.
   Validation
@@ -11,24 +11,19 @@ data Validation a = forall b.
     getError :: b -> ErrorMesssage
   }
 
-type Validations a = [Validation a]
-
 testLength :: Validation String
 testLength =
   Validation
     { preprocess = Just . length,
-      getError = \l -> if l > 3 then Error "toolong" else AllFine
+      getError = \l -> if l > 3 then Error "too long" else AllFine
     }
 
 testFirstCharacter :: Validation String
 testFirstCharacter =
   Validation
     { preprocess = listToMaybe,
-      getError = \first -> if first == 'o' then Error "should not start with o" else AllFine
+      getError = \first -> if first == 'o' then Error "should not start with 'o'" else AllFine
     }
-
-validations :: Validations String
-validations = [testLength, testFirstCharacter]
 
 -- runValidationBroken :: a -> Validation a -> ErrorMesssage
 -- runValidationBroken toValidate validation =
@@ -40,5 +35,9 @@ runValidation :: a -> Validation a -> ErrorMesssage
 runValidation toValidate (Validation preprocess getError) =
   maybe AllFine getError $ preprocess toValidate
 
-runValidations :: a -> Validations a -> [ErrorMesssage]
+runValidations :: a -> [Validation a] -> [ErrorMesssage]
 runValidations = map . runValidation
+
+main :: IO ()
+main = do
+  print $ runValidations "A string to test" [testLength, testFirstCharacter]
