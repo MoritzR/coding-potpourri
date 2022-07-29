@@ -28,8 +28,8 @@ data Maybe a = Nothing | Just a
 add a b = a + b
 
 --define a function with a type
-add2 :: Int -> Int -> Int
-add2 a b = a + b
+typedAdd :: Int -> Int -> Int
+typedAdd a b = a + b
 
 -- if/else
 ifElse :: Bool -> a -> a -> a

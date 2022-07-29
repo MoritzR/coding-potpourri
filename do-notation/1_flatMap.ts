@@ -1,3 +1,4 @@
+// Now replace explicit null checking with flatMapping. This doesn't seem nicer/more readable.
 function calculatePriceFlatMap(project: Project): Optional<[Net, Tax, Gross]> {
     return calculateNet(project)
         .flatMap(net =>
