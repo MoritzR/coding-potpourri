@@ -13,7 +13,7 @@ type ErrorMessage = Error | "allfine"
  * different intermediate values B, for example `Array<ValidationHiding<string>>`
  */
 type HidingValidation<A> = (validationToMessage: ValidationToMessage<A>) => ErrorMessage | null
-type MakeValidation = <A, B>(recipe: Validation<A, B>) => HidingValidation<A>
+type MakeValidation = <A, B>(validation: Validation<A, B>) => HidingValidation<A>
 
 type ValidationToMessage<A> = <B>(validation: Validation<A, B>) => ErrorMessage | null
 
