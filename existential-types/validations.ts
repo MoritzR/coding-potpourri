@@ -12,21 +12,21 @@ type ErrorMessage = Error | "allfine"
  * This is needed to have a list of validations with the same input A, but
  * different intermediate values B, for example `Array<ValidationHiding<string>>`
  */
-type Validation<A> = (rawValidationToMessage: RawValidationToMessage<A>) => ErrorMessage | null
-type MakeValidation = <A, B>(validation: RawValidation<A, B>) => Validation<A>
+type Validation<A> =
+    (callback: <B>(validation: RawValidation<A, B>) => ErrorMessage | null)
+        => ErrorMessage | null
 
-type RawValidationToMessage<A> = <B>(validation: RawValidation<A, B>) => ErrorMessage | null
+type MakeValidation = <A, B>(validation: RawValidation<A, B>) => Validation<A>
 
 const applyTo = <T>(input: T) => <R>(func: (input: T) => R) => func(input)
 
 const makeValidation: MakeValidation = applyTo
 
-const runValidation: <A>(toValidate: A) => RawValidationToMessage<A> =
-    toValidate =>
-        rawValidation => {
-            const magic = rawValidation.preprocess(toValidate);
-            return magic === null ? null : rawValidation.getError(magic);
-        }
+const runValidation: <A>(toValidate: A) => <B>(validation: RawValidation<A, B>) => ErrorMessage | null =
+    toValidate => rawValidation => {
+        const magic = rawValidation.preprocess(toValidate);
+        return magic === null ? null : rawValidation.getError(magic);
+    }
 
 const runHidingValidations: <A>(toValidate: A) => (validations: Array<Validation<A>>) => Array<ErrorMessage | null> =
     toValidate => validations =>
