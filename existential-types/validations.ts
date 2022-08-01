@@ -13,7 +13,7 @@ type ErrorMessage = Error | "allfine"
  * different intermediate values B, for example `Array<ValidationHiding<string>>`
  */
 type Validation<A> =
-    (callback: <B>(validation: RawValidation<A, B>) => ErrorMessage | null)
+    (callback: <B>(rawValidation: RawValidation<A, B>) => ErrorMessage | null)
         => ErrorMessage | null
 
 type MakeValidation = <A, B>(validation: RawValidation<A, B>) => Validation<A>
