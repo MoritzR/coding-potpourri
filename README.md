@@ -1,6 +1,6 @@
 # Coding Potpourri
 
-This repository contains a bunch of coding snippeds that seem interesting to me or help in understanding programming concepts.
+This repository contains a bunch of coding snippets that seem interesting to me or help in understanding programming concepts.
 
 For example:
 * a quick overview of the basic [Haskell syntax](basics/0_syntax.hs)
