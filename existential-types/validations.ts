@@ -17,9 +17,9 @@ type MakeValidation = <A, B>(validation: RawValidation<A, B>) => Validation<A>
 
 type RawValidationToMessage<A> = <B>(validation: RawValidation<A, B>) => ErrorMessage | null
 
-const apply = <T>(input: T) => <R>(func: (input: T) => R) => func(input)
+const applyTo = <T>(input: T) => <R>(func: (input: T) => R) => func(input)
 
-const makeValidation: MakeValidation = apply
+const makeValidation: MakeValidation = applyTo
 
 const runValidation: <A>(toValidate: A) => RawValidationToMessage<A> =
     toValidate =>
@@ -30,7 +30,7 @@ const runValidation: <A>(toValidate: A) => RawValidationToMessage<A> =
 
 const runHidingValidations: <A>(toValidate: A) => (validations: Array<Validation<A>>) => Array<ErrorMessage | null> =
     toValidate => validations =>
-        validations.map(apply(runValidation(toValidate)))
+        validations.map(applyTo(runValidation(toValidate)))
 
 
 const testLength = makeValidation({
