@@ -1,6 +1,6 @@
 // check this blog post for more insight on what's happening here: https://rubenpieters.github.io/programming/typescript/2018/07/13/existential-types-typescript.html
 
-type Validation<A, B> = {
+type RawValidation<A, B> = {
     preprocess: (_: A) => B | null
     getError: (_: B) => ErrorMessage
 }
@@ -8,27 +8,27 @@ type Error = { error: string }
 type ErrorMessage = Error | "allfine"
 
 /**
- * Like {@link Validation}, but it hides its second generic argument B.
+ * Like {@link RawValidation}, but it hides its second generic argument B.
  * This is needed to have a list of validations with the same input A, but
  * different intermediate values B, for example `Array<ValidationHiding<string>>`
  */
-type HidingValidation<A> = (validationToMessage: ValidationToMessage<A>) => ErrorMessage | null
-type MakeValidation = <A, B>(validation: Validation<A, B>) => HidingValidation<A>
+type Validation<A> = (rawValidationToMessage: RawValidationToMessage<A>) => ErrorMessage | null
+type MakeValidation = <A, B>(validation: RawValidation<A, B>) => Validation<A>
 
-type ValidationToMessage<A> = <B>(validation: Validation<A, B>) => ErrorMessage | null
+type RawValidationToMessage<A> = <B>(validation: RawValidation<A, B>) => ErrorMessage | null
 
 const apply = <T>(input: T) => <R>(func: (input: T) => R) => func(input)
 
 const makeValidation: MakeValidation = apply
 
-const runValidation: <A>(toValidate: A) => ValidationToMessage<A> =
+const runValidation: <A>(toValidate: A) => RawValidationToMessage<A> =
     toValidate =>
-        validation => {
-            const magic = validation.preprocess(toValidate);
-            return magic === null ? null : validation.getError(magic);
+        rawValidation => {
+            const magic = rawValidation.preprocess(toValidate);
+            return magic === null ? null : rawValidation.getError(magic);
         }
 
-const runHidingValidations: <A>(toValidate: A) => (validations: Array<HidingValidation<A>>) => Array<ErrorMessage | null> =
+const runHidingValidations: <A>(toValidate: A) => (validations: Array<Validation<A>>) => Array<ErrorMessage | null> =
     toValidate => validations =>
         validations.map(apply(runValidation(toValidate)))
 
