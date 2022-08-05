@@ -23,11 +23,11 @@ s >>= f = IndexedState $ \p ->
       (r, b) = runIndexedState (f a) q
    in (r, b)
 
-return :: a -> IndexedState s s a
-return a = IndexedState $ \s -> (s, a)
-
 (>>) :: IndexedState p q a -> IndexedState q r b -> IndexedState p r b
 s1 >> s2 = s1 >>= \_ -> s2
+
+return :: a -> IndexedState s s a
+return a = IndexedState $ \s -> (s, a)
 
 if' :: Bool -> IndexedState a b () -> IndexedState a IfRan ()
 if' True action = action >> put IfRan
