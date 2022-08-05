@@ -48,6 +48,14 @@ else' action = do
     go IfRan = iput New
     go IfDidn'tRun = action >> iput New
 
+elif' :: Bool -> IndexedState IfRan b () -> IndexedState IfRan IfRan ()
+elif' True action = do
+  ifRan <- iget
+  go ifRan
+  where
+    go IfRan = return ()
+    go IfDidn'tRun = action >> iput IfRan
+
 def :: IndexedState New b a -> a
 def state = snd $ runIndexedState state New
 
@@ -55,6 +63,13 @@ prog1 :: ()
 prog1 = def do
   if' True do
     return ()
+
+  elif' True do
+    return ()
+
+  elif' True do
+    return ()
+    
   else' do
     return ()
 
