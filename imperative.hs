@@ -49,8 +49,7 @@ else' action = do
     go IfDidn'tRun = action >> iput New
 
 def :: IndexedState New b a -> a
-def state =
-  let (b, a) = runIndexedState state New in a
+def state = snd $ runIndexedState state New
 
 prog1 :: ()
 prog1 = def do
@@ -74,4 +73,3 @@ prog1 = def do
 --     return ()
 --   else' do
 --     return ()
-
