@@ -57,4 +57,22 @@ const aNumber = call2(overloadWithOneOrTwoParameters, 1, 2)
 // runtime error! g.split is not a function
 console.log(aNumber.split(""))
 
- 
+// another example that I ran into when using Ramda.last()
+
+// Ramdas last is defined as follows
+declare function last(str: string): string;
+declare function last(list: readonly []): undefined;
+declare function last<T>(list: readonly T[]): T | undefined;
+
+const emptyArray: Array<number> = []
+
+const aNumberOrUndefined = last(emptyArray) // correctly inferred as number | undefined
+
+// now let's wrap it into our own last function
+// no cast is necessary, no type error, still, now we return T instead of T | undefined
+const myLast: <T>(list: Array<T>) => T = last;
+
+const aNumberButActuallyUndefined = myLast(emptyArray)
+
+// runtime error!
+aNumberButActuallyUndefined.toFixed() 
