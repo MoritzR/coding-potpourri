@@ -45,4 +45,4 @@ asText validationResults =
         ]
 
 main :: IO ()
-main = print $ asText $ runValidations "A string to test" [testLength, testFirst]
+main = putStrLn $ asText $ runValidations "A string to test" [testLength, testFirst]
