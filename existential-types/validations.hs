@@ -37,12 +37,9 @@ asText validationResults =
   let validationsThatRan = catMaybes validationResults
       errors = [message | (Error message) <- validationsThatRan]
    in concat
-        [ "I had ",
-          show $ length validationResults,
-          " validations and ran ",
-          show $ length validationsThatRan,
-          " of them. ",
-          show $ length errors,
+        [ "I had " ++ show (length validationResults),
+          " validations and ran " ++ show (length validationsThatRan),
+          " of them. " ++ show (length errors),
           " returned errors. Here are all errors: ",
           intercalate ", " errors
         ]
