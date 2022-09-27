@@ -1,6 +1,5 @@
 {-# LANGUAGE ExistentialQuantification #-}
 
-import Data.Function ((&))
 import Data.List (intercalate)
 import Data.Maybe (catMaybes, listToMaybe)
 
