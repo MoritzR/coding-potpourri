@@ -10,7 +10,7 @@ type ErrorMessage = Error | "allfine"
 /**
  * Like {@link RawValidation}, but it hides its second generic argument B.
  * This is needed to have a list of validations with the same input A, but
- * different intermediate values B, for example `Array<ValidationHiding<string>>`
+ * different intermediate values B, for example `Array<Validation<string>>`
  */
 type Validation<A> =
     (callback: <B>(rawValidation: RawValidation<A, B>) => ErrorMessage | null)
@@ -22,15 +22,15 @@ const applyTo = <T>(input: T) => <R>(func: (input: T) => R) => func(input)
 
 const makeValidation: MakeValidation = applyTo
 
-const runValidation: <A>(toValidate: A) => <B>(validation: RawValidation<A, B>) => ErrorMessage | null =
+const runRawValidation: <A>(toValidate: A) => <B>(validation: RawValidation<A, B>) => ErrorMessage | null =
     toValidate => rawValidation => {
         const magic = rawValidation.preprocess(toValidate);
         return magic === null ? null : rawValidation.getError(magic);
     }
 
-const runHidingValidations: <A>(toValidate: A) => (validations: Array<Validation<A>>) => Array<ErrorMessage | null> =
+const runValidations: <A>(toValidate: A) => (validations: Array<Validation<A>>) => Array<ErrorMessage | null> =
     toValidate => validations =>
-        validations.map(applyTo(runValidation(toValidate)))
+        validations.map(applyTo(runRawValidation(toValidate)))
 
 
 const testLength = makeValidation({
@@ -61,5 +61,4 @@ const asText: (messages: Array<ErrorMessage | null>) => string =
  ${errors.join(", ")}`
     }
 
-
-console.log(asText(runHidingValidations('A string to test')([testLength, testFirst])))
+console.log(asText(runValidations('A string to test')([testLength, testFirst])))

@@ -19,8 +19,8 @@ testLength =
       getError = \l -> if l > 3 then Error "too long" else AllFine
     }
 
-testFirstCharacter :: Validation String
-testFirstCharacter =
+testFirst :: Validation String
+testFirst =
   Validation
     { preprocess = listToMaybe,
       getError = \first -> if first == 'o' then Error "should not start with 'o'" else AllFine
@@ -55,5 +55,4 @@ asText validationResults =
         ]
 
 main :: IO ()
-main = do
-  print $ asText $ runValidations "A string to test" [testLength, testFirstCharacter]
+main = print $ asText $ runValidations "A string to test" [testLength, testFirst]
