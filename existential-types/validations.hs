@@ -26,12 +26,6 @@ testFirst =
       getError = \first -> if first == 'o' then Error "should not start with 'o'" else AllFine
     }
 
--- runValidationBroken :: a -> Validation a -> ErrorMesssage
--- runValidationBroken toValidate validation =
---   -- Cannot use record selector ‘getError’ as a function due to escaped type variables
---   -- Probable fix: use pattern-matching syntax instead
---   maybe AllFine getError validation $ preprocess validation toValidate
-
 runValidation :: a -> Validation a -> Maybe ErrorMesssage
 runValidation toValidate (Validation preprocess getError) =
   getError <$> preprocess toValidate
