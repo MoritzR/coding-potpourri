@@ -22,7 +22,7 @@ testLength :: Validation String
 testLength =
   Validation
     { preprocess = Just . length,
-      getError = \l -> if l > 3 then Error "too long" else AllFine
+      getError = \len -> if len > 3 then Error "too long" else AllFine
     }
 
 testFirst :: Validation String

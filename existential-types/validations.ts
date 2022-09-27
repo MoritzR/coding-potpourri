@@ -40,7 +40,7 @@ const testLength = makeValidation({
 
 const testFirst = makeValidation({
     preprocess: (s: string) => s[0],
-    getError: head => head === "o" ? { error: "should not start with 'o'" } : "allfine"
+    getError: first => first === "o" ? { error: "should not start with 'o'" } : "allfine"
 })
 
 export function isNotNull<T>(value: T | null): value is T {
