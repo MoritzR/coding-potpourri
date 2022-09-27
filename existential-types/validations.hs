@@ -44,5 +44,4 @@ asText validationResults =
           intercalate ", " errors
         ]
 
-main :: IO ()
 main = putStrLn $ asText $ runValidations "A string to test" [testLength, testFirst]
