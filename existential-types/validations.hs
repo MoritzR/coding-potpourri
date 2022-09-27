@@ -11,6 +11,13 @@ data Validation a = forall b.
     getError :: b -> ErrorMesssage
   }
 
+runValidation :: a -> Validation a -> Maybe ErrorMesssage
+runValidation toValidate (Validation preprocess getError) =
+  getError <$> preprocess toValidate
+
+runValidations :: a -> [Validation a] -> [Maybe ErrorMesssage]
+runValidations = map . runValidation
+
 testLength :: Validation String
 testLength =
   Validation
@@ -24,13 +31,6 @@ testFirst =
     { preprocess = listToMaybe,
       getError = \first -> if first == 'o' then Error "should not start with 'o'" else AllFine
     }
-
-runValidation :: a -> Validation a -> Maybe ErrorMesssage
-runValidation toValidate (Validation preprocess getError) =
-  getError <$> preprocess toValidate
-
-runValidations :: a -> [Validation a] -> [Maybe ErrorMesssage]
-runValidations = map . runValidation
 
 asText :: [Maybe ErrorMesssage] -> String
 asText validationResults =
