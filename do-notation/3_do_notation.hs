@@ -23,14 +23,14 @@ calculatePriceDoNotation project = do
 
   return (net, tax, gross)
 
--- looks something like that in C#
+-- looks something like that in C# (LINQ)
 -- NetTaxGross netTaxGross =
 --     from net in calculateNet(project)
 --     from tax in calculateTax(project, net)
 --     from gross in calculateGross(net, tax)
 --     select new NetTaxGross(net, tax, gross);
 
--- looks something like that in F#
+-- looks something like that in F# (computation expressions)
 -- netTaxGross = optional {
 --   let! net = calculateNet(project)
 --   let! tax = calculateTax(project, net)
