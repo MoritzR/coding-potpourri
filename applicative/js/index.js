@@ -6,13 +6,14 @@ const addNumbers = a => b => a + b
 
 
 // lists
+
+// this is `map` but with two arguments instead of one
 const addListsOfNumbers = R.lift(addNumbers)
 
 const listOfNumbers = addListsOfNumbers([1, 2], [10, 11])
 
 console.log("Add lists: ", listOfNumbers)
 
-// this is `map` but with two arguments instead of one
 const incrementListOfNumbers = R.map(a => a + 1) // could also use R.lift here
 const incrementedResult = incrementListOfNumbers([1, 2])
 console.log("Increment List: ", incrementedResult)
