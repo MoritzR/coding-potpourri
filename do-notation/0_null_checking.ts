@@ -12,17 +12,17 @@ declare function calculateGross(net: Net, tax: Tax): Optional<Gross>
 // Let's try explicit null checking first.
 function calculatePriceNullChecking(project: Project): Optional<[Net, Tax, Gross]> {
     const net = calculateNet(project);
-    if (net === []) {
+    if (net.length === 0) {
         return [];
     }
 
     const tax = calculateTax(project, net[0]);
-    if (tax === []) {
+    if (tax.length === 0) {
         return [];
     }
 
     const gross = calculateGross(net[0], tax[0]);
-    if (gross === []) {
+    if (gross.length === 0) {
         return [];
     }
 
