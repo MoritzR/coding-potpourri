@@ -22,4 +22,4 @@ const isAB3: TypePredicate<A, AB> = (a: A): a is AB => 'b' in a
 
 // This errors because it is missing the specific 'a is AB'
 // predicate, even though it is contained in TypePredicate<>
-const isAB4: TypePredicate<A, AB> = (a: A) => 'b' in a
+const isAB4: TypePredicate<A, AB> = a => 'b' in a
