@@ -1,0 +1,1 @@
+CREATE TABLE "appointments" ("id" integer not null primary key autoincrement, "status" varchar check ("status" in ('planned', 'done', 'canceled/ghosted', 'canceled (by admin)', '"canceled"')) not null, "created_at" datetime, "status_reason" varchar check ("status_reason" in ('by_customer', 'by_company', 'by_admin')))
