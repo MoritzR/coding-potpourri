@@ -1,5 +1,5 @@
-// from https://rpeszek.github.io/posts/2021-12-12-ts-types-part1.html
-// se also https://github.com/microsoft/TypeScript/issues/43187
+// most examples are from https://rpeszek.github.io/posts/2021-12-12-ts-types-part1.html
+// see also https://github.com/microsoft/TypeScript/issues/43187
 
 function overload(p: "PARAM1"): number
 function overload(p: "PARAM2"): string
