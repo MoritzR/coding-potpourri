@@ -78,6 +78,37 @@ const aNumberButActuallyUndefined = myLast(emptyArray)
 aNumberButActuallyUndefined.toFixed()
 
 
+// Another example from Ramda, this time using map()
+
+// this is the overload for map
+declare function map<T, U>(fn: (x: T) => U, list: readonly T[]): U[];
+declare function map<T, U>(fn: (x: T) => U): (list: readonly T[]) => U[];
+declare function map<T, U>(fn: (x: T[keyof T & keyof U] | ValueOfUnion<T>) => U[keyof T & keyof U], list: T): U;
+declare function map<T, U>(fn: (x: T[keyof T & keyof U] | ValueOfUnion<T>) => U[keyof T & keyof U]): (list: T) => U;
+declare function map<T, U>(fn: (x: T) => U, obj: Functor<T>): Functor<U>; // used in functors
+declare function map<T, U>(fn: (x: T) => U): (obj: Functor<T>) => Functor<U>; // used in functors
+
+type ValueOfUnion<T> = T extends infer U ? U[keyof U] : never;
+type Functor<A> =
+    | { ['fantasy-land/map']: <B>(fn: (a: A) => B) => Functor<B>;[key: string]: any }
+    | { map: <B>(fn: (a: A) => B) => Functor<B>;[key: string]: any };
+
+// the "T extends" is important to surface the following error
+const getName = <T extends string>(hasName: { name: T }): T => hasName.name;
+const getFirst = (l: string[]) => l[0]
+const compose = <A, B, C>(ab: (a: A) => B, bc: (b: B) => C): ((a: A) => C) =>
+    a => bc(ab(a))
+
+// "T extends string" make this infer "John" instead of just a string
+const john = getName({ name: "John" })
+
+// now let's use it
+const getFirstName = compose(map(getName), getFirst)
+
+// ouch, a runtime error, this function must be called with an array of objects
+getFirstName(3)
+
+
 // Another example from Ramda, this time using applyTo().
 
 // for applyTo there is a curried version
