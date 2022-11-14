@@ -8,7 +8,6 @@ const printInts = (ints: number[]) => ints.forEach(int => { console.log(int.toPr
 
 printInts(intArray);
 
-
 // This is not possible if you try to define your own array type
 interface MyArray<T> {
     push: (element: T) => void
@@ -35,3 +34,33 @@ const invariantUnknownPayload: InvariantPayload<unknown> = invariantIntPayload;
 // but we can still assing `intPayload` to it!
 const invariantUnknownPayload2: InvariantPayload<unknown> = intPayload;
 unknownPayload.payload = "hello world"
+
+
+// unknowns can also appear without us using unknown at all
+// this is especially problematic when when it appears in contravariant position
+// let's see this in action using Ramda's map() function
+
+// this is one of the overloads for map, see https://github.com/DefinitelyTyped/DefinitelyTyped/blob/f7ec78508c6797e42f87a4390735bc2c650a1bfd/types/ramda/index.d.ts#L1033
+// the other overloads are omitted for breverity, because they don't cause the issue
+
+declare function map<T, U>(fn: (x: T[keyof T & keyof U] | ValueOfUnion<T>) => U[keyof T & keyof U]): (list: T) => U;
+type ValueOfUnion<T> = T extends infer U ? U[keyof U] : never;
+
+// let's create some function we want to use 'map' with
+
+const getName = (hasName: { name: string }): string => hasName.name;
+const getFirst = (l: string[]): string | undefined => l[0]
+const compose = <A, B, C>(ab: (a: A) => B, bc: (b: B) => C): ((a: A) => C) =>
+    a => bc(ab(a))
+
+const john = getName({ name: "John" })
+
+// now let's use it
+const getFirstName = compose(map(getName), getFirst)
+
+// If you hover over 'getFirstName' you will notice that it takes an 'unkown'
+// even though we never used 'unknown' in our definitions!
+// That means we can call the functions with anything, according to Typescript.
+
+// ouch, a runtime error, good luck getting a name out of the number 3
+getFirstName(3)
