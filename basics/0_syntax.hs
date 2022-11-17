@@ -2,7 +2,7 @@ import Data.Function ((&))
 
 {-
 significant properties of Haskell:
-- pure* (means no statements, no mutation, for example `something :: a -> ()` is useless)
+- pure* (means no statements, no mutation or other side effects)
 - strongly typed
 - lazy
 -}
