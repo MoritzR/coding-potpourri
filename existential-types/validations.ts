@@ -43,10 +43,10 @@ const testFirst = makeValidation({
     getError: first => first === "o" ? { error: "should not start with 'o'" } : "allfine"
 })
 
-export function isNotNull<T>(value: T | null): value is T {
+function isNotNull<T>(value: T | null): value is T {
     return value !== null
 }
-export function isError<T>(message: ErrorMessage): message is Error {
+function isError<T>(message: ErrorMessage): message is Error {
     return typeof message === "object"
 }
 
