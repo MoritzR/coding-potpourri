@@ -1,11 +1,13 @@
 module Lib where
 
 import qualified Data.Set as Set
-import Control.Lens.Operators ((.~))
+import Control.Lens.Operators ((.~), (%~))
 import Control.Lens.Combinators (contains)
 import Data.Function ((&))
 
-mySetContaining3 = Set.fromList [1,2,4] & contains 3 .~ True
+setContaining3 = Set.fromList [1,2,4] & contains 3 .~ True
+
+setWithout4 = Set.fromList [1,2,4] & contains 4 %~ not
 
 {-
 > Set.fromList [1,2,4]
