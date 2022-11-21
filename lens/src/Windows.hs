@@ -1,18 +1,12 @@
 {-# LANGUAGE LambdaCase #-}
 {-# LANGUAGE RankNTypes #-}
 
-module Lib
-  ( someFunc,
-  )
-where
+module Windows where
 
 import Control.Lens (Field1 (_1), Field2 (_2), Getting, Ixed (ix), Lens', Prism', Traversal', ignored, index, over, toListOf, traversed, (^.), (^..))
 import Control.Lens.Unsound (adjoin)
 import Data.Foldable (Foldable (toList))
 import Types
-
-someFunc :: IO ()
-someFunc = putStrLn "someFunc"
 
 allWindowsInProject :: [Window]
 allWindowsInProject = project ^. allWindows
