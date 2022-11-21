@@ -6,10 +6,6 @@ author:              "Author name here"
 maintainer:          "example@example.com"
 copyright:           "2021 Author name here"
 
-extra-source-files:
-- README.md
-- ChangeLog.md
-
 # Metadata used when publishing your package
 # synopsis:            Short description of your package
 # category:            Web
@@ -22,6 +18,7 @@ description:         Please see the README on GitHub at <https://github.com/gith
 dependencies:
 - base >= 4.7 && < 5
 - lens
+- containers
 
 library:
   source-dirs: src
