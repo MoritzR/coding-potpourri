@@ -39,7 +39,7 @@ if ("hello" === "world") {
     console.log("hello equals world")
 }
 
-// compiles!
+// compiles! --> fixed in TypeScript 4.8
 if ({ value: "hello" } === { value: "world" }) {
     console.log("hello equals world")
 }
