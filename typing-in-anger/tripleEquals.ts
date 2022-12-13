@@ -32,7 +32,7 @@ if (undefined === null) {
     console.log("undefined equals null")
 }
 
-// also interesting how this interacts with the type windening
+// also interesting how this interacts with the type widening
 
 // compile error
 if ("hello" === "world") {
