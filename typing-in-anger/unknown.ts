@@ -58,7 +58,7 @@ const john = getName({ name: "John" })
 // now let's use it
 const getFirstName = compose(map(getName), getFirst)
 
-// If you hover over 'getFirstName' you will notice that it takes an 'unkown'
+// If you hover over 'getFirstName' you will notice that it takes an 'unknown'
 // even though we never used 'unknown' in our definitions!
 // That means we can call the functions with anything, according to Typescript.
 
