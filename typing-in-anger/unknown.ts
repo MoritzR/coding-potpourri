@@ -56,11 +56,11 @@ const compose = <A, B, C>(ab: (a: A) => B, bc: (b: B) => C): ((a: A) => C) =>
 const john = getName({ name: "John" })
 
 // now let's use it
-const getFirstName = compose(map(getName), getFirst)
+const getFirstOfName = compose(map(getName), getFirst)
 
-// If you hover over 'getFirstName' you will notice that it takes an 'unknown'
+// If you hover over 'getFirstOfName' you will notice that it takes an 'unknown'
 // even though we never used 'unknown' in our definitions!
 // That means we can call the functions with anything, according to Typescript.
 
 // ouch, a runtime error, good luck getting a name out of the number 3
-getFirstName(3)
+getFirstOfName(3)
