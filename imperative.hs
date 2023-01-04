@@ -1,5 +1,6 @@
 {-# LANGUAGE BlockArguments #-}
 {-# LANGUAGE RebindableSyntax #-}
+{-# LANGUAGE TupleSections #-}
 
 import Control.Monad (when)
 import Control.Monad.State (MonadState, State)
@@ -9,13 +10,13 @@ data New = New
 
 data IfRan = IfRan | IfDidn'tRun
 
-data IndexedState stateBefore stateAfter result = IndexedState {runIndexedState :: stateBefore -> (stateAfter, result)}
+newtype IndexedState stateBefore stateAfter result = IndexedState {runIndexedState :: stateBefore -> (stateAfter, result)}
 
 get :: IndexedState p p p
 get = IndexedState $ \s -> (s, s)
 
 put :: so -> IndexedState si so ()
-put x = IndexedState (\si -> (x, ()))
+put x = IndexedState $ const (x, ())
 
 (>>=) :: IndexedState p q a -> (a -> IndexedState q r b) -> IndexedState p r b
 s >>= f = IndexedState $ \p ->
@@ -24,10 +25,10 @@ s >>= f = IndexedState $ \p ->
    in (r, b)
 
 (>>) :: IndexedState p q a -> IndexedState q r b -> IndexedState p r b
-s1 >> s2 = s1 >>= \_ -> s2
+s1 >> s2 = s1 >>= const s2
 
 return :: a -> IndexedState s s a
-return a = IndexedState $ \s -> (s, a)
+return a = IndexedState (,a)
 
 if' :: Bool -> IndexedState a b () -> IndexedState a IfRan ()
 if' True action = action >> put IfRan
