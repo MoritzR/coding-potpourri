@@ -8,8 +8,7 @@
 */
 
 const pipe2 = <A, B>(a: A, ab: (a: A) => B): B => ab(a)
-const pipe3 = <A, B, C>(a: A, ab: (a: A) => B, bc: (b: B) => C): C => bc(ab(a))
-const flow2 = <A, B, C>(ab: (a: A) => B, bc: (b: B) => C): ((a: A) => C) => a => bc(ab(a))
+const flow3 = <A, B, C, D>(ab: (a: A) => B, bc: (b: B) => C, cd: (c: C) => D): ((a: A) => D) => a => cd(bc(ab(a)))
 
 const myObject = { a: 3 }
 
@@ -41,14 +40,15 @@ pipe2(
     propBetter("not a prop") // it correctly rejects property names that are not part of the object
 )
 
-// let's chain two props together
-const gettingTwoProps = flow2(
+// let's chain some props together
+const gettingNestedProp = flow3(
+    propBetter("a prop"),
     propBetter("not a prop"),
-    propBetter("also not a prop")
+    propBetter("also very much not a prop")
 )
 /* ouch, a runtime error because we typescript infers an `any` somewhere, 
 even though we never wrote `any` ourselves :( */
-gettingTwoProps({ "not a prop": { "a prop": 123 } })
+gettingNestedProp({ "a prop": { "also a prop": 123 } })
 
 
 // let's try again with even better type safety, and also IDE autocompletion
@@ -66,7 +66,8 @@ pipe2(
     myObject,
     propBest("not a prop") // it correctly rejects property names that are not part of the object
 )
-flow2(
+flow3(
     propBest("not a prop"), // this time we can't even chain them like before, nice
-    propBest("also not a prop")
+    propBest("also not a prop"),
+    propBest("still not a prop")
 )
