@@ -46,7 +46,7 @@ const gettingNestedProp = flow3(
     propBetter("not a prop"),
     propBetter("also very much not a prop")
 )
-/* ouch, a runtime error because we typescript infers an `any` somewhere, 
+/* ouch, a runtime error because typescript infers an `any` somewhere, 
 even though we never wrote `any` ourselves :( */
 gettingNestedProp({ "a prop": { "also a prop": 123 } })
 
