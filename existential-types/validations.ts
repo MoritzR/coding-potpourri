@@ -4,8 +4,8 @@ type RawValidation<A, B> = {
     preprocess: (_: A) => B | null
     getError: (_: B) => ErrorMessage
 }
-type Error = { error: string }
-type ErrorMessage = Error | "allfine"
+type MyError = { error: string }
+type ErrorMessage = MyError | "allfine"
 
 /**
  * Like {@link RawValidation}, but it hides its second generic argument B.
@@ -46,7 +46,7 @@ const testFirst = makeValidation({
 function isNotNull<T>(value: T | null): value is T {
     return value !== null
 }
-function isError<T>(message: ErrorMessage): message is Error {
+function isError<T>(message: ErrorMessage): message is MyError {
     return typeof message === "object"
 }
 
