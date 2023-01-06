@@ -1,4 +1,4 @@
-// most examples are from https://rpeszek.github.io/posts/2021-12-12-ts-types-part1.html
+// inspired by this blog post: https://rpeszek.github.io/posts/2021-12-12-ts-types-part1.html
 // see also https://github.com/microsoft/TypeScript/issues/43187
 
 function overload(p: "PARAM1"): number
