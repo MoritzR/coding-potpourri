@@ -24,8 +24,8 @@ const makeValidation: MakeValidation = applyTo
 
 const runRawValidation: <A>(toValidate: A) => <B>(validation: RawValidation<A, B>) => ErrorMessage | null =
     toValidate => rawValidation => {
-        const magic = rawValidation.preprocess(toValidate);
-        return magic === null ? null : rawValidation.getError(magic);
+        const preprocessed = rawValidation.preprocess(toValidate);
+        return preprocessed === null ? null : rawValidation.getError(preprocessed);
     }
 
 const runValidations: <A>(toValidate: A) => (validations: Array<Validation<A>>) => Array<ErrorMessage | null> =
