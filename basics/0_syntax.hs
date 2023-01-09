@@ -53,7 +53,7 @@ aPlusBTimesC a b c =
 
 -- where
 aPlusBTimesC' :: Int -> Int -> Int -> Int
-aPlusBTimesC' a b c = aPlusB + c
+aPlusBTimesC' a b c = aPlusB * c
   where
     aPlusB = a + b
 
