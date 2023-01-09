@@ -5,8 +5,8 @@ const array: Array<number> = [1, 2, 3]
 type Optional<T> = T | null
 const optional: Optional<number> = 3
 
-type Stream<T> = [T, Stream<T>]
-const makeStream: () => Stream<number> = () => [1, makeStream()]
+type Stream<T> = [T, () => Stream<T>]
+const makeStream: () => Stream<number> = () => [1, makeStream]
 
 type MapOptional<A, B> = (f: (_: A) => B) => (optional: Optional<A>) => Optional<B>
 const mapOptional: MapOptional<number, string> = f => optional => optional === null ? null : f(optional)
