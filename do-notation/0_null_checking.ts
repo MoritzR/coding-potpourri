@@ -1,13 +1,13 @@
-type Project = {}
-type Optional<T> = Array<T> // = [] | [T]
-type Net = number
-type Tax = number
-type Gross = number
+export type Project = {}
+export type Optional<T> = Array<T> // = [] | [T]
+export type Net = number
+export type Tax = number
+export type Gross = number
 
 // Task: Given the following three functions, calculate the net, tax and gross of a Project
-declare function calculateNet(project: Project): Optional<Net>
-declare function calculateTax(project: Project, net: Net): Optional<Tax>
-declare function calculateGross(net: Net, tax: Tax): Optional<Gross>
+export declare function calculateNet(project: Project): Optional<Net>
+export declare function calculateTax(project: Project, net: Net): Optional<Tax>
+export declare function calculateGross(net: Net, tax: Tax): Optional<Gross>
 
 // Let's try explicit null checking first.
 function calculatePriceNullChecking(project: Project): Optional<[Net, Tax, Gross]> {

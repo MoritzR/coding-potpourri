@@ -1,3 +1,5 @@
+import { Project, Optional, Net, Tax, Gross, calculateNet, calculateTax, calculateGross } from "./0_null_checking";
+
 // Now replace explicit null checking with flatMapping. This doesn't seem nicer/more readable.
 function calculatePriceFlatMap(project: Project): Optional<[Net, Tax, Gross]> {
     return calculateNet(project)

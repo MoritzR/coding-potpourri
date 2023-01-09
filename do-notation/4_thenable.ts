@@ -1,3 +1,6 @@
+import { Gross, Net, Project, Tax } from "./0_null_checking";
+
+
 interface OptionalThenable<T> {
     value: T | null;
     then<TResult1 = T, TResult2 = never>(onfulfilled?: ((value: T) => TResult1 | OptionalThenable<TResult1>) | undefined | null, onrejected?: ((reason: any) => TResult2 | OptionalThenable<TResult2>) | undefined | null): OptionalThenable<TResult1 | TResult2>;
