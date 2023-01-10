@@ -30,4 +30,4 @@ startAppEnvironmentSpecific(env => ({
     /* Now typescript doesn't complain, it looks like we are setting a developer mode,
         but in fact, there is no such thing! */
     developerMode: env === "development" // no typescript error :(
-}))
+})) // we can fix this by adding 'satisfies Settings'
