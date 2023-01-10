@@ -14,9 +14,9 @@ const houseCat: Cat = {
     type: "house"
 }
 const typeEror: Cat = {
+    lineage: "unknown",
     // setting 'type' to something not included in 'Cat' correctly raises a type error
-    // @ts-expect-error
-    type: "i am a dog"
+    type: 99
 }
 
 function updateType<T extends Cat | Dog>(input: T): T {
