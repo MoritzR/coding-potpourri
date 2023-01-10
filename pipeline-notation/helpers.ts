@@ -8,4 +8,6 @@ export function toString(a: { toString: () => string }) {
 
 export const filter = <T>(predicate: (_: T) => boolean) => (array: ReadonlyArray<T>) => array.filter(predicate)
 
-export const sum = (array: ReadonlyArray<number>) => array.reduce((a, b) => a + b, 0)
+export const sum = (array: ReadonlyArray<number>): number => array.reduce((a, b) => a + b, 0)
+
+export const isEven = (n: number): boolean => n % 2 === 0
