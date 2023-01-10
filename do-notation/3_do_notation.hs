@@ -37,3 +37,11 @@ calculatePriceDoNotation project = do
 --   let! gross = calculateGross(net, tax)
 --   some(net, tax, gross)
 -- }
+
+-- looks something like that in Kotlin + Arrow (suspend functions)
+-- val netTaxGross = optional<NetTaxGross> {
+--   val net = calculateNet(project).bind()
+--   val tax = calculateTax(project, net).bind()
+--   val gross = calculateGross(net, tax).bind()
+--   Triple(net, tax, gross)
+-- }
