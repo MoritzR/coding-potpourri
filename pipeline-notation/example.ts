@@ -28,3 +28,16 @@ pipe(
     sum,
     toString
 )
+
+// Alternatively we could create a variable for each step
+const evenNumbersArray = numbers.filter(isEven)
+const evenNumbersSum = sum(evenNumbersArray)
+const stringOfSum = evenNumbersArray.toString()
+
+/* I intentially made a mistake here.
+I don't stringify the sum, but the array
+This error will be harder to spot in more complex examples.
+'pipe' ensures that there is only ever one values present that is passed from the top
+to the bottom. When using variables, the dependencies can be more complex, as there is
+no rule ensuring that each variable is only used in the following line.
+*/
