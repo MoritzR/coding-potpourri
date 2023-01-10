@@ -20,7 +20,7 @@ sum( // 3.
 
 // We start in the middle, the jump to the top, then back to the end
 
-// What if we could read it more like 'pipeline', from top to bottom?
+// What if we could read it more like a 'pipeline', from top to bottom?
 // Is would be possible if 'sum' was a function on arrays, or if we use 'pipe':
 pipe(
     numbers,
