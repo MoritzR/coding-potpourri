@@ -41,7 +41,7 @@ if ("hello" === "world") {
 
 // compiles! --> fixed in TypeScript 4.8
 if ({ value: "hello" } === { value: "world" }) {
-    console.log("hello equals world")
+    console.log("two different objects are equal by reference")
 }
 
 
