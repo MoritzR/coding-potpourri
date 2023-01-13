@@ -32,16 +32,16 @@ const runValidations: <A>(toValidate: A) => (validations: Array<Validation<A>>) 
     toValidate => validations =>
         validations.map(applyTo(runRawValidation(toValidate)))
 
-
-const testLength = makeValidation({
-    preprocess: (s: string) => s.length,
-    getError: len => len > 3 ? { error: "too long" } : "allfine"
-})
-
-const testFirst = makeValidation({
-    preprocess: (s: string) => s[0],
-    getError: first => first === "o" ? { error: "should not start with 'o'" } : "allfine"
-})
+const validations: Array<Validation<string>> = [
+    makeValidation({
+        preprocess: s => s[0],
+        getError: first => first === "o" ? { error: "should not start with 'o'" } : "allfine"
+    }),
+    makeValidation({
+        preprocess: s => s.length,
+        getError: len => len > 3 ? { error: "too long" } : "allfine"
+    })
+]
 
 function isNotNull<T>(value: T | null): value is T {
     return value !== null
@@ -61,4 +61,5 @@ const asText: (messages: Array<ErrorMessage | null>) => string =
  ${errors.join(", ")}`
     }
 
-console.log(asText(runValidations('A string to test')([testLength, testFirst])))
+
+console.log(asText(runValidations('A string to test')(validations)))

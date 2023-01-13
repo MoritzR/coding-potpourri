@@ -18,19 +18,16 @@ runValidation toValidate (Validation preprocess getError) =
 runValidations :: a -> [Validation a] -> [Maybe ErrorMesssage]
 runValidations = map . runValidation
 
-testLength :: Validation String
-testLength =
-  Validation
-    { preprocess = Just . length,
-      getError = \len -> if len > 3 then Error "too long" else AllFine
-    }
-
-testFirst :: Validation String
-testFirst =
-  Validation
-    { preprocess = listToMaybe,
-      getError = \first -> if first == 'o' then Error "should not start with 'o'" else AllFine
-    }
+validations :: [Validation String] =
+  [ Validation
+      { preprocess = Just . length,
+        getError = \len -> if len > 3 then Error "too long" else AllFine
+      },
+    Validation
+      { preprocess = listToMaybe,
+        getError = \first -> if first == 'o' then Error "should not start with 'o'" else AllFine
+      }
+  ]
 
 asText :: [Maybe ErrorMesssage] -> String
 asText validationResults =
@@ -44,4 +41,4 @@ asText validationResults =
           intercalate ", " errors
         ]
 
-main = putStrLn $ asText $ runValidations "A string to test" [testLength, testFirst]
+main = putStrLn $ asText $ runValidations "A string to test" validations
