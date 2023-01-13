@@ -33,7 +33,7 @@ declare function applyToOverloaded<T>(el: T): <U>(fn: (t: T) => U) => U;
 declare function applyToOverloaded<T, U>(el: T, fn: (t: T) => U): U;
 
 // now let's set up some types to use these with
-type ValueWithFunction<A, B> = [A, (a: A) => B];
+type ValueWithFunction<A, B> = { value: A, function: (a: A) => B};
 type ExistentialFunction<B> = <A, R>(cont: (f: ValueWithFunction<A, B>) => R) => R;
 
 type Make = <A, B>(f: ValueWithFunction<A, B>) => ExistentialFunction<B>
@@ -51,12 +51,12 @@ const make6: Make = applyToOverloaded
 // now we can use this to create a runtime error
 // without typescript complaining
 const unsafeFunction: ExistentialFunction<string> =
-    make6([1, a => (a + 1).toString()])
+    make6({value: 1, function: a => (a + 1).toString()})
 
-// ouch, runtime error, unsafeFunction actually takes in a number
-unsafeFunction(f => f[1]([""]))
+// ouch, runtime error, f.function actually takes in a number
+unsafeFunction(f => f.function(""))
 // adding type annotations doesn't help
-unsafeFunction((f: ValueWithFunction<string[], string>) => f[1]([""]))
+unsafeFunction((f: ValueWithFunction<string, string>) => f.function(""))
 
 // There is an issue in our Typing, let's fix that
 type ExistentialFunctionImproved<B> = <R>(cont: <A>(f: ValueWithFunction<A, B>) => R) => R;
@@ -70,8 +70,8 @@ const makeImproved4: MakeImproved = a => b => applyToOverloaded(a)(b)
 const makeImproved5: MakeImproved = a => b => applyToOverloaded(a, b)
 const makeImproved6: MakeImproved = applyToOverloaded
 
-const safeFuntion = makeImproved([1, a => (a + 1).toString()])
+const safeFuntion = makeImproved({value: 1, function: a => (a + 1).toString()})
 // now we get a type error, as it should be
-safeFuntion(f => f[1]([""]))
+safeFuntion(f => f.function(""))
 // the following is the only correct way to call safeFunction
-safeFuntion(f => f[1](f[0]))
+safeFuntion(f => f.function(f.value))
