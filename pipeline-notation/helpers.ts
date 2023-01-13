@@ -2,9 +2,7 @@ export function pipe<A, B, C, D>(a: A, ab: (_: A) => B, bc: (_: B) => C, cd: (_:
     return cd(bc(ab(a)))
 }
 
-export function toString(a: { toString: () => string }) {
-    return a.toString()
-}
+export const toString = (a: { toString: () => string }) => a.toString()
 
 export const filter = <T>(predicate: (_: T) => boolean) => (array: ReadonlyArray<T>) => array.filter(predicate)
 
