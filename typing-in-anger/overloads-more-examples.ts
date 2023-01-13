@@ -33,10 +33,10 @@ declare function applyToOverloaded<T>(el: T): <U>(fn: (t: T) => U) => U;
 declare function applyToOverloaded<T, U>(el: T, fn: (t: T) => U): U;
 
 // now let's set up some types to use these with
-type MyFunction<A, B> = [A, (a: A) => B];
-type ExistentialFunction<B> = <A, R>(cont: (f: MyFunction<A, B>) => R) => R;
+type ValueWithFunction<A, B> = [A, (a: A) => B];
+type ExistentialFunction<B> = <A, R>(cont: (f: ValueWithFunction<A, B>) => R) => R;
 
-type Make = <A, B>(f: MyFunction<A, B>) => ExistentialFunction<B>
+type Make = <A, B>(f: ValueWithFunction<A, B>) => ExistentialFunction<B>
 
 // all of these (correctly) cause type errors
 const make: Make = a => b => b(a)
@@ -56,11 +56,11 @@ const unsafeFunction: ExistentialFunction<string> =
 // ouch, runtime error, unsafeFunction actually takes in a number
 unsafeFunction(f => f[1]([""]))
 // adding type annotations doesn't help
-unsafeFunction((f: MyFunction<string[], string>) => f[1]([""]))
+unsafeFunction((f: ValueWithFunction<string[], string>) => f[1]([""]))
 
 // There is an issue in our Typing, let's fix that
-type ExistentialFunctionImproved<B> = <R>(cont: <A>(f: MyFunction<A, B>) => R) => R;
-type MakeImproved = <A, B>(f: MyFunction<A, B>) => ExistentialFunctionImproved<B>
+type ExistentialFunctionImproved<B> = <R>(cont: <A>(f: ValueWithFunction<A, B>) => R) => R;
+type MakeImproved = <A, B>(f: ValueWithFunction<A, B>) => ExistentialFunctionImproved<B>
 
 // now all type check, as they should
 const makeImproved: MakeImproved = a => b => b(a)
