@@ -18,7 +18,8 @@ runValidation toValidate (Validation preprocess getError) =
 runValidations :: a -> [Validation a] -> [Maybe ErrorMesssage]
 runValidations = map . runValidation
 
-validations :: [Validation String] =
+validations :: [Validation String]
+validations =
   [ Validation
       { preprocess = Just . length,
         getError = \len -> if len > 3 then Error "too long" else AllFine
