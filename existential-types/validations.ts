@@ -46,7 +46,7 @@ const validations: Array<Validation<string>> = [
 function isNotNull<T>(value: T | null): value is T {
     return value !== null
 }
-function isError<T>(message: ErrorMessage): message is MyError {
+function isError(message: ErrorMessage): message is MyError {
     return typeof message === "object"
 }
 
