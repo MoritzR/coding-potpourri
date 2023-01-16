@@ -18,7 +18,7 @@ type Validation<A> =
 
 type MakeValidation = <A, B>(validation: RawValidation<A, B>) => Validation<A>
 
-const applyTo = <T>(input: T) => <R>(func: (input: T) => R) => func(input)
+const applyTo = <A>(input: A) => <B>(func: (input: A) => B): B => func(input)
 
 const makeValidation: MakeValidation = applyTo
 
