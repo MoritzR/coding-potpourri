@@ -19,8 +19,8 @@ function call<A, B>(fn: ((a: A) => B), input: A) {
 const overload1 = overload("PARAM1")
 const overload2 = overload("PARAM2")
 
-// does not compile, chaning the order of overloads in `overload` switches
-// which of the following lines work and which does not
+// does not compile, changing the order of overloads in `overload` switches
+// which of the following lines work and which do not
 const callOverload1 = call(overload, "PARAM1")
 // works by providing explicit type annotations
 const callOverload1Works = call<"PARAM1", number>(overload, "PARAM1")
