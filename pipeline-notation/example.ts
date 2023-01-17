@@ -12,16 +12,16 @@ const result =
             .filter(isEven)
     ).toString()
 
-// Annoyingly, the ways to read this function in the order that each step is executed is the following:
+// Annoyingly, the way to read this function in the order that each step is executed is the following:
 sum( // 3.
     numbers // 1.
         .filter(isEven) // 2. 
 ).toString() // 4.
 
-// We start in the middle, the jump to the top, then back to the end
+// We start in the middle, then jump to the top, then back to the end
 
 // What if we could read it more like a 'pipeline', from top to bottom?
-// Is would be possible if 'sum' was a function on arrays, or if we use 'pipe':
+// This would be possible if 'sum' was a function on arrays ... or if we use 'pipe':
 pipe(
     numbers,
     filter(isEven),
