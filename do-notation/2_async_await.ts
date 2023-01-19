@@ -7,7 +7,7 @@ declare function calculateGrossPromise(net: Net, tax: Tax): Promise<Gross>
 
 // If, instead of an Optional, we return a Promise, we can get this nice readable code.
 // But now all of the calling code has to be async aswell, when in reality our function
-// is not async at all. Cann we get this nice syntax without Promises?
+// is not async at all. Can we get this nice syntax without Promises?
 // Sadly no, but next you can check out how this looks in Haskell (or other languages like C# and F#)
 async function calculatePriceAsync(project: Project): Promise<[Net, Tax, Gross]> {
     const net = await calculateNetPromise(project);
