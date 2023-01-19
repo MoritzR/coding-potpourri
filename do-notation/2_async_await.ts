@@ -9,7 +9,6 @@ declare function calculateGrossPromise(net: Net, tax: Tax): Promise<Gross>
 // But now all of the calling code has to be async aswell, when in reality our function
 // is not async at all. Cann we get this nice syntax without Promises?
 // Sadly no, but next you can check out how this looks in Haskell (or other languages like C# and F#)
-// or see that javascript's `Thenable` also doesn't really help us.
 async function calculatePriceAsync(project: Project): Promise<[Net, Tax, Gross]> {
     const net = await calculateNetPromise(project);
     const tax = await calculateTaxPromise(project, net);
