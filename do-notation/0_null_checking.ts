@@ -28,3 +28,6 @@ function calculatePriceNullChecking(project: Project): Optional<[Net, Tax, Gross
 
     return [[net[0], tax[0], gross[0]]]
 }
+
+// This is fine but seems to contain a lot of manual "null"-checking
+// (or array emptiness checking in this case)

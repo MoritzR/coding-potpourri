@@ -1,6 +1,6 @@
 import { Project, Optional, Net, Tax, Gross, calculateNet, calculateTax, calculateGross } from "./0_null_checking";
 
-// Now replace explicit null checking with flatMapping. This doesn't seem nicer/more readable.
+// Let's replace explicit null checking with flatMapping.
 function calculatePriceFlatMap(project: Project): Optional<[Net, Tax, Gross]> {
     return calculateNet(project)
         .flatMap(net =>
@@ -9,3 +9,5 @@ function calculatePriceFlatMap(project: Project): Optional<[Net, Tax, Gross]> {
                     calculateGross(net, tax)
                         .map(gross => [net, tax, gross] as [Net, Tax, Gross])));
 }
+// The behavior is the same and we need less lines,
+// but it actually seems less readable now :(
