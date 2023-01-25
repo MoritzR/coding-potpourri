@@ -14,5 +14,4 @@ const calculatePriceOption = (project: Project): Option<[Net, Tax, Gross]> =>
         bind("tax", ({ net }) => calculateTaxOption(project, net)),
         bind("gross", ({ net, tax }) => calculateGrossOption(net, tax)),
         map(({ net, tax, gross }) => [net, tax, gross])
-
     )
