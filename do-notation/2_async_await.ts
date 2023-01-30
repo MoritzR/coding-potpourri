@@ -36,8 +36,8 @@ async function calculatePriceAsync(project: Project): Promise<[Net, Tax, Gross]>
 }
 
 /*  Wow, this is much more readable!
-    The only issue now is, that our function needs to be async to be able
-    to have nice nice syntax. Can we have the same syntax but without async?
+    One issue with this is that our function needs to be async.
+    Can we have the same syntax but without async?
     Sadly no, at least not exactly like that.
     Next, you can check out how the do-notation looks in Haskell (or C#/F#/Kotlin)
     where it can be use for any type implements the required interface.
