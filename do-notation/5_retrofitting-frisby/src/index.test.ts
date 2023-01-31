@@ -9,14 +9,11 @@ const getIdFromUrl = (id: number) => frisby.get(getUrl(id)).then(getId)
 
 test('three consecutive calls', () => {
   return getIdFromUrl(1)
-    .then(id1 =>
-      getIdFromUrl(id1 + 1)
-        .then(id2 =>
-          getIdFromUrl(id1 + id2)
-            .then(id3 =>
-              getIdFromUrl(id1 + id2 + id3)
-                .then(() => [id1, id2, id3])
-                .then(result => expect(result).toEqual([1, 2, 3]))))
+    .then(id1 => getIdFromUrl(id1 + 1)
+      .then(id2 => getIdFromUrl(id1 + id2)
+        .then(id3 => getIdFromUrl(id1 + id2 + id3)
+          .then(() => [id1, id2, id3])
+          .then(result => expect(result).toEqual([1, 2, 3]))))
     )
 });
 
