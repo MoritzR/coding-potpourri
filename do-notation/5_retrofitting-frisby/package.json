@@ -1,0 +1,20 @@
+{
+  "name": "frisby",
+  "version": "1.0.0",
+  "description": "",
+  "main": "index.js",
+  "scripts": {
+    "test": "vitest"
+  },
+  "author": "",
+  "license": "ISC",
+  "dependencies": {
+    "fp-ts": "^2.13.1",
+    "frisby": "^2.1.3",
+    "typescript": "^4.9.5",
+    "vitest": "^0.28.3"
+  },
+  "devDependencies": {
+    "@types/frisby": "^2.0.14"
+  }
+}
