@@ -7,7 +7,7 @@ import Text.ParserCombinators.ReadP
 
 main = do
   sqlQuery <- readFile "query.txt"
-  forM_ (runParser enumParser sqlQuery) do
+  forM_ (runParser enumParser sqlQuery)
     putStrLn
 
 runParser parser = head . map fst . readP_to_S parser
