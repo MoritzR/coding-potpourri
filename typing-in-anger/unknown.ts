@@ -50,13 +50,13 @@ type ValueOfUnion<T> = T extends infer U ? U[keyof U] : never;
 
 const getName = (hasName: { name: string }): string => hasName.name;
 const getFirst = (l: string[]): string | undefined => l[0]
-const compose = <A, B, C>(ab: (a: A) => B, bc: (b: B) => C): ((a: A) => C) =>
+const flow2 = <A, B, C>(ab: (a: A) => B, bc: (b: B) => C): ((a: A) => C) =>
     a => bc(ab(a))
 
 const john = getName({ name: "John" })
 
 // now let's use it
-const getFirstOfName = compose(map(getName), getFirst)
+const getFirstOfName = flow2(map(getName), getFirst)
 
 // If you hover over 'getFirstOfName' you will notice that it takes an 'unknown'
 // even though we never used 'unknown' in our definitions!
