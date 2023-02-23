@@ -57,19 +57,19 @@ const flow2 = <A, B, C>(ab: (a: A) => B, bc: (b: B) => C): ((a: A) => C) =>
     a => bc(ab(a))
 
 // now let's use it
-const getFirstOfName = flow2(map(getName), getFirst)
+const getFirstOfNames = flow2(map(getName), getFirst)
 
 // If you hover over 'getFirstOfName' you will notice that it takes an 'unknown'
 // even though we never used 'unknown' in our definitions!
 // That means we can call the functions with anything, according to Typescript.
 
 // ouch, a runtime error, good luck getting a name out of the number 3
-getFirstOfName(3)
+getFirstOfNames(3)
 
 // With a better `map` typing, this works correctly
 declare function mapBetter<A, B>(fn: ((a: A) => B)): (a: A[]) => B[]
 
-const getFirstOfName2 = flow2(mapBetter(getName), getFirst)
+const getFirstOfNames2 = flow2(mapBetter(getName), getFirst)
 
-getFirstOfName2(3)
-getFirstOfName2([{ name: "Boop" }])
+getFirstOfNames2(3)
+getFirstOfNames2([{ name: "Boop" }])
