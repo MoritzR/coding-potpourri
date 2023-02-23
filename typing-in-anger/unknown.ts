@@ -33,7 +33,7 @@ const invariantIntPayload: InvariantPayload<number> = { payload: 1 };
 const invariantUnknownPayload: InvariantPayload<unknown> = invariantIntPayload;
 // but we can still assing `intPayload` to it!
 const invariantUnknownPayload2: InvariantPayload<unknown> = intPayload;
-unknownPayload.payload = "hello world"
+invariantUnknownPayload2.payload = "hello world"
 
 // This behavior is by design to prevent breaking changes.
 // See: https://github.com/microsoft/TypeScript/pull/18654
