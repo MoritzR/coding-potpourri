@@ -35,6 +35,9 @@ const invariantUnknownPayload: InvariantPayload<unknown> = invariantIntPayload;
 const invariantUnknownPayload2: InvariantPayload<unknown> = intPayload;
 unknownPayload.payload = "hello world"
 
+// This behavior is by design to prevent breaking changes.
+// See: https://github.com/microsoft/TypeScript/pull/18654
+
 
 // unknowns can also appear without us using unknown at all
 // this is especially problematic when when it appears in contravariant position
