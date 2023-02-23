@@ -56,8 +56,6 @@ const getFirst = (l: string[]): string | undefined => l[0]
 const flow2 = <A, B, C>(ab: (a: A) => B, bc: (b: B) => C): ((a: A) => C) =>
     a => bc(ab(a))
 
-const john = getName({ name: "John" })
-
 // now let's use it
 const getFirstOfName = flow2(map(getName), getFirst)
 
