@@ -10,5 +10,5 @@ const foo: Foo = thing;
 // Uh oh...
 const bar: Bar = foo;
 
-// runtime error :(
+// runtime error because bar.bar is a string not a number :(
 bar.bar?.toFixed()
