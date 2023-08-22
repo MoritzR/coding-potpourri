@@ -2,7 +2,7 @@
 
 type RawValidation<A, T, B> = {
     preprocess: (_: A) => B | null
-    getError: (_: B) => T
+    getResult: (_: B) => T
 }
 type MyError = { error: string }
 type ErrorMessage = MyError | "allfine"
@@ -25,7 +25,7 @@ const makeValidation: MakeValidation = applyTo
 const runRawValidation: <A>(toValidate: A) => <B>(validation: RawValidation<A, ErrorMessage, B>) => ErrorMessage | null =
     toValidate => rawValidation => {
         const preprocessed = rawValidation.preprocess(toValidate);
-        return preprocessed === null ? null : rawValidation.getError(preprocessed);
+        return preprocessed === null ? null : rawValidation.getResult(preprocessed);
     }
 
 const runValidations: <A>(toValidate: A) => (validations: Array<Validation<A>>) => Array<ErrorMessage | null> =
@@ -34,11 +34,11 @@ const runValidations: <A>(toValidate: A) => (validations: Array<Validation<A>>) 
 const validations: Array<Validation<string>> = [
     makeValidation({
         preprocess: s => s[0],
-        getError: first => first === "o" ? { error: "should not start with 'o'" } : "allfine"
+        getResult: first => first === "o" ? { error: "should not start with 'o'" } : "allfine"
     }),
     makeValidation({
         preprocess: s => s.length,
-        getError: len => len > 3 ? { error: "too long" } : "allfine"
+        getResult: len => len > 3 ? { error: "too long" } : "allfine"
     })
 ]
 
