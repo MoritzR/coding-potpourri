@@ -16,7 +16,7 @@ type Validation<A, Result> =
     (callback: <B>(rawValidation: RawValidation<A, Result, B>) => Result | null)
         => Result | null
 
-type MakeValidation = <A, B>(validation: RawValidation<A, ErrorMessage, B>) => Validation<A, ErrorMessage>
+type MakeValidation = <A, Result, B>(validation: RawValidation<A, Result, B>) => Validation<A, Result>
 
 const applyTo = <A>(input: A) => <B>(func: (input: A) => B): B => func(input)
 
