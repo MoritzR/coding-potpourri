@@ -1,8 +1,8 @@
 // check this blog post for more insight on what's happening here: https://rubenpieters.github.io/programming/typescript/2018/07/13/existential-types-typescript.html
 
-type RawValidation<A, B> = {
+type RawValidation<A, T, B> = {
     preprocess: (_: A) => B | null
-    getError: (_: B) => ErrorMessage
+    getError: (_: B) => T
 }
 type MyError = { error: string }
 type ErrorMessage = MyError | "allfine"
@@ -13,24 +13,23 @@ type ErrorMessage = MyError | "allfine"
  * different intermediate values B, for example `Array<Validation<string>>`
  */
 type Validation<A> =
-    (callback: <B>(rawValidation: RawValidation<A, B>) => ErrorMessage | null)
+    (callback: <B>(rawValidation: RawValidation<A, ErrorMessage, B>) => ErrorMessage | null)
         => ErrorMessage | null
 
-type MakeValidation = <A, B>(validation: RawValidation<A, B>) => Validation<A>
+type MakeValidation = <A, B>(validation: RawValidation<A, ErrorMessage, B>) => Validation<A>
 
 const applyTo = <A>(input: A) => <B>(func: (input: A) => B): B => func(input)
 
 const makeValidation: MakeValidation = applyTo
 
-const runRawValidation: <A>(toValidate: A) => <B>(validation: RawValidation<A, B>) => ErrorMessage | null =
+const runRawValidation: <A>(toValidate: A) => <B>(validation: RawValidation<A, ErrorMessage, B>) => ErrorMessage | null =
     toValidate => rawValidation => {
         const preprocessed = rawValidation.preprocess(toValidate);
         return preprocessed === null ? null : rawValidation.getError(preprocessed);
     }
 
 const runValidations: <A>(toValidate: A) => (validations: Array<Validation<A>>) => Array<ErrorMessage | null> =
-    toValidate => validations =>
-        validations.map(applyTo(runRawValidation(toValidate)))
+    toValidate => validations => validations.map(applyTo(runRawValidation(toValidate)))
 
 const validations: Array<Validation<string>> = [
     makeValidation({
