@@ -22,7 +22,7 @@ const applyTo = <A>(input: A) => <B>(func: (input: A) => B): B => func(input)
 
 const makeValidation: MakeValidation = applyTo
 
-const runRawValidation: <A>(toValidate: A) => <B>(validation: RawValidation<A, ErrorMessage, B>) => ErrorMessage | null =
+const runRawValidation: <A>(toValidate: A) => <Result, B>(validation: RawValidation<A, Result, B>) => Result | null =
     toValidate => rawValidation => {
         const preprocessed = rawValidation.preprocess(toValidate);
         return preprocessed === null ? null : rawValidation.getResult(preprocessed);
