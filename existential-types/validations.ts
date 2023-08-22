@@ -28,7 +28,7 @@ const runRawValidation: <A>(toValidate: A) => <Result, B>(validation: RawValidat
         return preprocessed === null ? null : rawValidation.getResult(preprocessed);
     }
 
-const runValidations: <A>(toValidate: A) => (validations: Array<Validation<A, ErrorMessage>>) => Array<ErrorMessage | null> =
+const runValidations: <A>(toValidate: A) => <Result>(validations: Array<Validation<A, Result>>) => Array<Result | null> =
     toValidate => validations => validations.map(applyTo(runRawValidation(toValidate)))
 
 const validations: Array<Validation<string, ErrorMessage>> = [
