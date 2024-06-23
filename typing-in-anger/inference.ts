@@ -9,3 +9,25 @@ const recordFromA = record(a)
 
 recordFromInlined.b.optional // no error
 recordFromA.b.optional // error
+
+
+// produce a runtime error by extracting a function
+type A = { prop: number }
+type B = { prop: string }
+type AB = A | B
+
+let ab: AB = { prop: "a string" }
+
+const update = () => {
+  ab = { prop: 1 }
+}
+
+update()
+
+ab.prop.split("") // runtime error :(
+
+ab = { prop: 2 }
+
+ab.prop.split("") // here it gets the type correctly
+
+
