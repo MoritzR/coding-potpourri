@@ -1,8 +1,8 @@
 // check this blog post for more insight on what's happening here: https://rubenpieters.github.io/programming/typescript/2018/07/13/existential-types-typescript.html
 
-type RawValidation<A, B> = {
+type RawValidation<A, T, B> = {
     preprocess: (_: A) => B | null
-    getError: (_: B) => ErrorMessage
+    getResult: (_: B) => T
 }
 type MyError = { error: string }
 type ErrorMessage = MyError | "allfine"
@@ -12,34 +12,33 @@ type ErrorMessage = MyError | "allfine"
  * This is needed to have a list of validations with the same input A, but
  * different intermediate values B, for example `Array<Validation<string>>`
  */
-type Validation<A> =
-    (callback: <B>(rawValidation: RawValidation<A, B>) => ErrorMessage | null)
-        => ErrorMessage | null
+type Validation<A, Result> =
+    (callback: <B>(rawValidation: RawValidation<A, Result, B>) => Result | null)
+        => Result | null
 
-type MakeValidation = <A, B>(validation: RawValidation<A, B>) => Validation<A>
+type MakeValidation = <A, Result, B>(validation: RawValidation<A, Result, B>) => Validation<A, Result>
 
 const applyTo = <A>(input: A) => <B>(func: (input: A) => B): B => func(input)
 
 const makeValidation: MakeValidation = applyTo
 
-const runRawValidation: <A>(toValidate: A) => <B>(validation: RawValidation<A, B>) => ErrorMessage | null =
+const runRawValidation: <A>(toValidate: A) => <Result, B>(validation: RawValidation<A, Result, B>) => Result | null =
     toValidate => rawValidation => {
         const preprocessed = rawValidation.preprocess(toValidate);
-        return preprocessed === null ? null : rawValidation.getError(preprocessed);
+        return preprocessed === null ? null : rawValidation.getResult(preprocessed);
     }
 
-const runValidations: <A>(toValidate: A) => (validations: Array<Validation<A>>) => Array<ErrorMessage | null> =
-    toValidate => validations =>
-        validations.map(applyTo(runRawValidation(toValidate)))
+const runValidations: <A>(toValidate: A) => <Result>(validations: Array<Validation<A, Result>>) => Array<Result | null> =
+    toValidate => validations => validations.map(applyTo(runRawValidation(toValidate)))
 
-const validations: Array<Validation<string>> = [
+const validations: Array<Validation<string, ErrorMessage>> = [
     makeValidation({
         preprocess: s => s[0],
-        getError: first => first === "o" ? { error: "should not start with 'o'" } : "allfine"
+        getResult: first => first === "o" ? { error: "should not start with 'o'" } : "allfine"
     }),
     makeValidation({
         preprocess: s => s.length,
-        getError: len => len > 3 ? { error: "too long" } : "allfine"
+        getResult: len => len > 3 ? { error: "too long" } : "allfine"
     })
 ]
 
