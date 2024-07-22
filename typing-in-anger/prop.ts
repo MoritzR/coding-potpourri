@@ -10,14 +10,14 @@
 const pipe2 = <A, B>(a: A, ab: (a: A) => B): B => ab(a)
 const flow3 = <A, B, C, D>(ab: (a: A) => B, bc: (b: B) => C, cd: (c: C) => D): ((a: A) => D) => a => cd(bc(ab(a)))
 
-const myObject = { a: 3 }
+const myObject = { aProp: 3 }
 
 // let's try our first version, very simple
 const prop = (key: string) => <T>(obj: Record<string, T>) => obj[key]
 
 pipe2(
     myObject,
-    prop("a") // compiles
+    prop("aProp") // compiles
 )
 /* also compiles, but value will be `undefined` instead of number
     potentially causing runtime errors :( */
@@ -33,7 +33,7 @@ const propBetter = <K extends string>(key: K) => <T extends { [k in K] }>(obj: T
 // nice, it compiles, but we don't get any autocompletion on the key from the IDE :(
 pipe2(
     myObject,
-    propBetter("a")
+    propBetter("aProp")
 )
 pipe2(
     myObject,
@@ -42,13 +42,13 @@ pipe2(
 
 // let's chain some props together
 const gettingNestedProp = flow3(
-    propBetter("a prop"),
+    propBetter("aProp"),
     propBetter("not a prop"),
     propBetter("also very much not a prop")
 )
 /* ouch, a runtime error because typescript infers an `any` somewhere, 
 even though we never wrote `any` ourselves :( */
-gettingNestedProp({ "a prop": { "also a prop": 123 } })
+gettingNestedProp({ "aProp": { "also a prop": 123 } })
 
 
 // let's try again with even better type safety, and also IDE autocompletion
