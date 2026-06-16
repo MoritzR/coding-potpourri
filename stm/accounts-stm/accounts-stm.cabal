@@ -51,7 +51,7 @@ extra-doc-files:    CHANGELOG.md
 -- extra-source-files:
 
 common warnings
-    ghc-options: -Wall -Wno-missing-signatures
+    ghc-options: -Wall -Wno-missing-signatures -Wno-unused-do-bind
 
 executable accounts-stm
     -- Import common warning flags.
@@ -70,6 +70,7 @@ executable accounts-stm
     -- Other library packages from which modules are imported.
     build-depends:    base ^>=4.21.1.0
       , stm
+      , async
 
     -- Directories containing source files.
     hs-source-dirs:   app
