@@ -51,7 +51,7 @@ extra-doc-files:    CHANGELOG.md
 -- extra-source-files:
 
 common warnings
-    ghc-options: -Wall -Wno-missing-signatures -Wno-unused-do-bind
+    ghc-options: -Wall -Wno-missing-signatures -Wno-unused-do-bind -Wno-type-defaults
 
 executable accounts-stm
     -- Import common warning flags.

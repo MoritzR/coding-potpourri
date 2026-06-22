@@ -1,11 +1,8 @@
-import Control.Concurrent.STM (TVar, readTVar, writeTVar, STM, retry, atomically, check, newTVarIO, orElse)
+import Control.Concurrent.STM (readTVar, writeTVar, atomically, check, newTVarIO, orElse)
 import Control.Concurrent.Async (forConcurrently_)
 import Control.Exception (Exception)
 import Control.Monad.STM (throwSTM)
 
-type Account = TVar Int
-
-withdraw :: Account -> Int -> STM ()
 withdraw acc amount = do
     bal <- readTVar acc
     check $ bal >= amount
@@ -43,9 +40,5 @@ instance Exception AccountException
 
 
 
-times i action = forConcurrently_ [(1 :: Int) .. i] (const action)
 
-check2 theBool =
-  if theBool
-  then return ()
-  else retry
+times i action = forConcurrently_ [1 .. i] (const action)
