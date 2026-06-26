@@ -3,16 +3,16 @@ import Control.Concurrent.Async (forConcurrently_)
 import Control.Exception (Exception)
 import Control.Monad.STM (throwSTM)
 
-withdraw acc amount = do
+withdraw amount acc = do
     bal <- readTVar acc
     check $ bal >= amount
     writeTVar acc (bal - amount)
 
-deposit account amount = withdraw account (-amount)
+deposit amount = withdraw (-amount)
 
 transfer from backup to amount = do
-  withdraw from amount `orElse` withdraw backup amount
-  deposit to amount
+  withdraw amount from `orElse` withdraw amount backup
+  deposit amount to
 
 main = do
   acc1 <- newTVarIO 200
