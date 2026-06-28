@@ -41,4 +41,4 @@ instance Exception AccountException
 
 
 
-times i action = forConcurrently_ [1 .. i] (const action)
+times i = forConcurrently_ [1 .. i] . const
