@@ -3,10 +3,10 @@ import Control.Concurrent.Async (forConcurrently_)
 import Control.Exception (Exception)
 import Control.Monad.STM (throwSTM)
 
-withdraw amount acc = do
-    bal <- readTVar acc
-    check $ bal >= amount
-    writeTVar acc (bal - amount)
+withdraw amount account = do
+    balance <- readTVar account
+    check $ balance >= amount
+    writeTVar account (balance - amount)
 
 deposit amount = withdraw (-amount)
 
